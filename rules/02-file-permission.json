@@ -1,0 +1,22 @@
+{
+  "id": "ENV-FILE-PERM",
+  "title": ".env 权限宽于 600（同机器其他用户可读）",
+  "severity": "medium",
+  "source": "OWASP Secrets Management Cheat Sheet · 2.3 Access Control（密钥只应对需要它的主体可读）；POSIX 文件权限模型（凭据类文件惯例为 chmod 600，仅属主可读写）",
+  "advice": "这个环境配置文件的权限位超过 600，说明本机（或同容器/同 CI runner 上的）其他用户可以直接读走里面的密钥。做法：chmod 600 .env；顺带看一眼上级目录是否也过宽；新建 .env 的脚本和容器启动逻辑也统一用 0600 创建，避免每次重新拉取又变回 644。注意：本规则只在 POSIX 系统（Linux/macOS）上有意义。",
+  "check": {
+    "type": "file-permission",
+    "globs": [
+      "**/.env",
+      "**/.env.local",
+      "**/.env.*.local",
+      "**/.env.development",
+      "**/.env.dev",
+      "**/.env.test",
+      "**/.env.staging",
+      "**/.env.production",
+      "**/.env.prod"
+    ],
+    "maxMode": 384
+  }
+}

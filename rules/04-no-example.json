@@ -1,0 +1,21 @@
+{
+  "id": "ENV-NO-EXAMPLE",
+  "title": "项目里有凭据型环境配置，却找不到 .env.example / .env.sample 模板",
+  "severity": "low",
+  "source": "OWASP Secrets Management Cheat Sheet · 6.5 Usability and Ease of Onboarding（应让使用者清楚需要哪些配置项、怎么接进来）；12-Factor App 第 III 条 Config（配置项清单应与代码一起维护，而不是靠口口相传）",
+  "advice": "仓库里没有 .env.example / .env.sample / .env.template 这类模板文件，但项目确实在使用环境配置。后果是：新人不知道要配哪些变量，最常见的做法是找同事要一份真实 .env 直接复制 —— 密钥就此扩散到每个人的机器上，而且没人说得清到底必须配几项。做法：提交一份只含键名与占位值的 .env.example（不含任何真实值），在 README 里指向它。",
+  "check": {
+    "type": "file-exists",
+    "globs": [
+      ".env.example",
+      ".env.sample",
+      ".env.template",
+      "**/.env.example",
+      "**/.env.sample",
+      "**/.env.template"
+    ],
+    "require": true,
+    "when": "^[ \\t]*(?:export[ \\t]+)?[A-Za-z0-9_]*(?:PASSWORD|PASSWD|SECRET|TOKEN|API_?KEY|ACCESS_?KEY|PRIVATE_?KEY|CREDENTIAL|DSN)[A-Za-z0-9_]*[ \\t]*=[ \\t]*\\S",
+    "whenFlags": "m"
+  }
+}

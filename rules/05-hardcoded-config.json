@@ -1,0 +1,31 @@
+{
+  "id": "ENV-HARDCODED-CONFIG",
+  "title": "源码里硬编码了内网/私有网段地址或 .internal 主机名",
+  "severity": "low",
+  "source": "12-Factor App 第 III 条 Config —— 配置应与代码严格分离（原文：config varies substantially across deploys, code does not）；OWASP Secrets Management Cheat Sheet · 1 Introduction（配置与凭据散布在代码里，难以集中管理）",
+  "advice": "代码里直接写了内网/私有网段地址（10.x、192.168.x、172.16-31.x）或 .internal 主机名。这类值会随部署环境变化（开发/测试/生产各不同），写死在代码里意味着：换环境要改代码、容易把生产地址带进测试、也没法用环境变量覆盖。做法：把地址移进 .env 或部署配置，代码里通过环境变量读取，并在 .env.example 里给出示例。这是提示确认项，不是「有问题」的结论。",
+  "check": {
+    "type": "file-pattern",
+    "pattern": "(?<![\\d.])(?:10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|192\\.168\\.\\d{1,3}\\.\\d{1,3}|172\\.(?:1[6-9]|2\\d|3[01])\\.\\d{1,3}\\.\\d{1,3})(?![\\d.])|[A-Za-z0-9-]+\\.internal(?![A-Za-z0-9-])",
+    "flags": "g",
+    "exts": [
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".ts",
+      ".mts",
+      ".cts",
+      ".jsx",
+      ".tsx",
+      ".py",
+      ".go",
+      ".java",
+      ".kt",
+      ".rb",
+      ".php",
+      ".cs",
+      ".rs"
+    ],
+    "max": 20
+  }
+}

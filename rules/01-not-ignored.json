@@ -1,0 +1,18 @@
+{
+  "id": "ENV-NOT-IGNORED",
+  "title": ".gitignore / .git/info/exclude 里没有忽略 .env，而项目里有凭据型环境配置",
+  "severity": "high",
+  "source": "OWASP Secrets Management Cheat Sheet · 2.3 Access Control 与 3.2 Where should a secret be?（凭据不应进入版本控制）；12-Factor App 第 III 条 Config（原文指出配置文件「很容易被误提交进仓库」）；Git 官方文档 gitignore（用于声明哪些文件不纳入版本控制）",
+  "advice": "仓库里有疑似环境配置文件的内容，但 .gitignore（以及 .git/info/exclude）里没有一行忽略 .env —— 一旦执行 git add . 提交，里面的密钥就进了提交历史，事后删文件也没用，历史里仍然在，而且可能已经被 clone/fork/CI 缓存带走。做法：在 .gitignore 里加一行 .env；若已经提交过，先 git rm --cached .env 再提交，然后按「密钥已泄露」处理（轮换该密钥，而不是只删文件）。",
+  "check": {
+    "type": "files-lack",
+    "pattern": "(?:^|\\n)[ \\t]*(?:\\*\\*/)?\\.env\\*?[ \\t]*(?:\\r?\\n|$)",
+    "paths": [
+      ".gitignore",
+      "**/.gitignore",
+      ".git/info/exclude"
+    ],
+    "when": "^[ \\t]*(?:export[ \\t]+)?[A-Za-z0-9_]*(?:PASSWORD|PASSWD|SECRET|TOKEN|API_?KEY|ACCESS_?KEY|PRIVATE_?KEY|CREDENTIAL|DSN)[A-Za-z0-9_]*[ \\t]*=[ \\t]*\\S",
+    "whenFlags": "m"
+  }
+}

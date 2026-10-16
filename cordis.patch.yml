@@ -1,0 +1,4 @@
+# @deepwhale-cn/dsh-env-audit 的组合层
+- insert:
+    - id: env-audit
+      name: '@deepwhale-cn/dsh-env-audit'

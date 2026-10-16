@@ -1,0 +1,16 @@
+{
+  "name": "checkout-api",
+  "version": "2.4.1",
+  "private": true,
+  "type": "module",
+  "description": "结算服务的订单查询接口",
+  "main": "src/db.js",
+  "scripts": {
+    "start": "node src/db.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.5"
+  }
+}

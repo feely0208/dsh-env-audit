@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
+
+# 环境配置：只提交模板
+.env
+.env.local
+.env.*.local
