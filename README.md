@@ -1,5 +1,7 @@
 # @deepwhale-cn/dsh-env-audit
 
+[![dshfind 收录](https://dshfind.com/api/badge/feely0208/dsh-env-audit?lang=zh)](https://dshfind.com/zh/plugins/feely0208/dsh-env-audit)
+
 **在你把密钥提交进 git 之前，先看一眼 `.env` 本身。**
 
 **关键词**：配置文件审计 · .env 检查 · 密钥进 git · 文件权限 · 明文密码 · gitignore · 环境变量 · .env.example · 配置与代码分离
